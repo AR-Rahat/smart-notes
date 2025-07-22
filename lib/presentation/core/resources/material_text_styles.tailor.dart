@@ -86,7 +86,9 @@ mixin _$MaterialTextStylesTailorMixin on ThemeExtension<MaterialTextStyles> {
 
   @override
   MaterialTextStyles lerp(
-      covariant ThemeExtension<MaterialTextStyles>? other, double t) {
+    covariant ThemeExtension<MaterialTextStyles>? other,
+    double t,
+  ) {
     if (other is! MaterialTextStyles) return this as MaterialTextStyles;
     return MaterialTextStyles(
       displayLarge: TextStyle.lerp(displayLarge, other.displayLarge, t)!,
@@ -124,45 +126,81 @@ mixin _$MaterialTextStylesTailorMixin on ThemeExtension<MaterialTextStyles> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is MaterialTextStyles &&
-            const DeepCollectionEquality()
-                .equals(displayLarge, other.displayLarge) &&
-            const DeepCollectionEquality()
-                .equals(displayMedium, other.displayMedium) &&
-            const DeepCollectionEquality()
-                .equals(displaySmall, other.displaySmall) &&
-            const DeepCollectionEquality()
-                .equals(headlineLarge, other.headlineLarge) &&
-            const DeepCollectionEquality()
-                .equals(headlineMedium, other.headlineMedium) &&
-            const DeepCollectionEquality()
-                .equals(headlineSmall, other.headlineSmall) &&
-            const DeepCollectionEquality()
-                .equals(titleTinyUppercase, other.titleTinyUppercase) &&
-            const DeepCollectionEquality()
-                .equals(tittleXLUppercase, other.tittleXLUppercase) &&
-            const DeepCollectionEquality()
-                .equals(titleSmallUppercase, other.titleSmallUppercase) &&
-            const DeepCollectionEquality()
-                .equals(titleLarge, other.titleLarge) &&
-            const DeepCollectionEquality()
-                .equals(titleMedium, other.titleMedium) &&
-            const DeepCollectionEquality()
-                .equals(titleMediumUppercase, other.titleMediumUppercase) &&
-            const DeepCollectionEquality()
-                .equals(titleSmall, other.titleSmall) &&
+            const DeepCollectionEquality().equals(
+              displayLarge,
+              other.displayLarge,
+            ) &&
+            const DeepCollectionEquality().equals(
+              displayMedium,
+              other.displayMedium,
+            ) &&
+            const DeepCollectionEquality().equals(
+              displaySmall,
+              other.displaySmall,
+            ) &&
+            const DeepCollectionEquality().equals(
+              headlineLarge,
+              other.headlineLarge,
+            ) &&
+            const DeepCollectionEquality().equals(
+              headlineMedium,
+              other.headlineMedium,
+            ) &&
+            const DeepCollectionEquality().equals(
+              headlineSmall,
+              other.headlineSmall,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleTinyUppercase,
+              other.titleTinyUppercase,
+            ) &&
+            const DeepCollectionEquality().equals(
+              tittleXLUppercase,
+              other.tittleXLUppercase,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleSmallUppercase,
+              other.titleSmallUppercase,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleLarge,
+              other.titleLarge,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleMedium,
+              other.titleMedium,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleMediumUppercase,
+              other.titleMediumUppercase,
+            ) &&
+            const DeepCollectionEquality().equals(
+              titleSmall,
+              other.titleSmall,
+            ) &&
             const DeepCollectionEquality().equals(bodyLarge, other.bodyLarge) &&
-            const DeepCollectionEquality()
-                .equals(bodyMedium, other.bodyMedium) &&
-            const DeepCollectionEquality()
-                .equals(bodySmallUppercase, other.bodySmallUppercase) &&
+            const DeepCollectionEquality().equals(
+              bodyMedium,
+              other.bodyMedium,
+            ) &&
+            const DeepCollectionEquality().equals(
+              bodySmallUppercase,
+              other.bodySmallUppercase,
+            ) &&
             const DeepCollectionEquality().equals(bodySmall, other.bodySmall) &&
             const DeepCollectionEquality().equals(labelXL, other.labelXL) &&
-            const DeepCollectionEquality()
-                .equals(labelLarge, other.labelLarge) &&
-            const DeepCollectionEquality()
-                .equals(labelMedium, other.labelMedium) &&
-            const DeepCollectionEquality()
-                .equals(labelSmall, other.labelSmall) &&
+            const DeepCollectionEquality().equals(
+              labelLarge,
+              other.labelLarge,
+            ) &&
+            const DeepCollectionEquality().equals(
+              labelMedium,
+              other.labelMedium,
+            ) &&
+            const DeepCollectionEquality().equals(
+              labelSmall,
+              other.labelSmall,
+            ) &&
             const DeepCollectionEquality().equals(labelTiny, other.labelTiny));
   }
 

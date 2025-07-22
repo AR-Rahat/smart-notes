@@ -2,9 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
+import 'package:smart_notes/presentation/core/widgets/button/app_button.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
 import 'package:smart_notes/presentation/core/widgets/text_field/app_text_field.dart';
+import 'package:smart_notes/presentation/core/widgets/utilities/app_alerts.dart';
 import 'package:smart_notes/presentation/core/widgets/utilities/app_card.dart';
+import 'package:smart_notes/presentation/features/main/ui/add_note_bottom_sheet.dart';
 
 @RoutePage()
 class MainScreen extends StatelessWidget {
@@ -95,13 +98,17 @@ class MainScreen extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: context.neutral.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(context.customWidth(10)),
+                      borderRadius: BorderRadius.circular(
+                        context.customWidth(10),
+                      ),
                       border: Border.all(color: context.neutral),
                     ),
-                    padding: EdgeInsets.all(context.w12),
+                    padding: EdgeInsets.all(context.customWidth(10)),
                     child: Icon(
                       Icons.folder_outlined,
-                      color: context.foregroundOnBackground.withValues(alpha: .4),
+                      color: context.foregroundOnBackground.withValues(
+                        alpha: .4,
+                      ),
                     ),
                   ),
                 ),
@@ -110,15 +117,31 @@ class MainScreen extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: context.primary,
-                      borderRadius: BorderRadius.circular(context.customWidth(10)),
+                      borderRadius: BorderRadius.circular(
+                        context.customWidth(10),
+                      ),
                       border: Border.all(color: context.neutral),
                     ),
-                    padding: EdgeInsets.all(context.customWidth(13)),
-                    child: MaterialAppText.titleLarge('All Notes', color: context.foregroundOnPrimary,),
+                    padding: EdgeInsets.all(context.customWidth(11)),
+                    child: MaterialAppText.titleLarge(
+                      'All Notes',
+                      color: context.foregroundOnPrimary,
+                    ),
                   ),
                 ),
               ],
             ),
+            const Spacer(),
+            AppButton.primary(
+              label: '\uFF0B New Note',
+              borderRadius: 50,
+              onPressed: () {
+                context.alerts.openBottomSheet(
+                  child: const AddNoteBottomSheet(),
+                );
+              },
+            ),
+            context.customVerticalGap(24),
           ],
         ),
       ),

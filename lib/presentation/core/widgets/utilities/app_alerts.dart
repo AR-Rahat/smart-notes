@@ -190,7 +190,7 @@ class AppAlerts {
                     width: MediaQuery.sizeOf(context).width,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: context.colors.background,
+                        color: context.colors.foregroundOnPrimary,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(context.w20),
                           topRight: Radius.circular(context.w20),

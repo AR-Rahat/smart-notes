@@ -93,8 +93,12 @@ mixin _$AppColorsTailorMixin on ThemeExtension<AppColors> {
       danger: Color.lerp(danger, other.danger, t)!,
       foregroundOnBackground:
           Color.lerp(foregroundOnBackground, other.foregroundOnBackground, t)!,
-      foregroundLightOnBackground: Color.lerp(
-          foregroundLightOnBackground, other.foregroundLightOnBackground, t)!,
+      foregroundLightOnBackground:
+          Color.lerp(
+            foregroundLightOnBackground,
+            other.foregroundLightOnBackground,
+            t,
+          )!,
       foregroundOnPrimary:
           Color.lerp(foregroundOnPrimary, other.foregroundOnPrimary, t)!,
       foregroundOnSecondary:
@@ -118,37 +122,65 @@ mixin _$AppColorsTailorMixin on ThemeExtension<AppColors> {
         (other.runtimeType == runtimeType &&
             other is AppColors &&
             const DeepCollectionEquality().equals(primary, other.primary) &&
-            const DeepCollectionEquality()
-                .equals(primaryVariant, other.primaryVariant) &&
+            const DeepCollectionEquality().equals(
+              primaryVariant,
+              other.primaryVariant,
+            ) &&
             const DeepCollectionEquality().equals(secondary, other.secondary) &&
-            const DeepCollectionEquality()
-                .equals(secondaryVariant, other.secondaryVariant) &&
-            const DeepCollectionEquality()
-                .equals(background, other.background) &&
-            const DeepCollectionEquality()
-                .equals(appBarBackground, other.appBarBackground) &&
+            const DeepCollectionEquality().equals(
+              secondaryVariant,
+              other.secondaryVariant,
+            ) &&
+            const DeepCollectionEquality().equals(
+              background,
+              other.background,
+            ) &&
+            const DeepCollectionEquality().equals(
+              appBarBackground,
+              other.appBarBackground,
+            ) &&
             const DeepCollectionEquality().equals(danger, other.danger) &&
-            const DeepCollectionEquality()
-                .equals(foregroundOnBackground, other.foregroundOnBackground) &&
-            const DeepCollectionEquality().equals(foregroundLightOnBackground,
-                other.foregroundLightOnBackground) &&
-            const DeepCollectionEquality()
-                .equals(foregroundOnPrimary, other.foregroundOnPrimary) &&
-            const DeepCollectionEquality()
-                .equals(foregroundOnSecondary, other.foregroundOnSecondary) &&
-            const DeepCollectionEquality()
-                .equals(foregroundOnAppBar, other.foregroundOnAppBar) &&
-            const DeepCollectionEquality()
-                .equals(foregroundOnDanger, other.foregroundOnDanger) &&
+            const DeepCollectionEquality().equals(
+              foregroundOnBackground,
+              other.foregroundOnBackground,
+            ) &&
+            const DeepCollectionEquality().equals(
+              foregroundLightOnBackground,
+              other.foregroundLightOnBackground,
+            ) &&
+            const DeepCollectionEquality().equals(
+              foregroundOnPrimary,
+              other.foregroundOnPrimary,
+            ) &&
+            const DeepCollectionEquality().equals(
+              foregroundOnSecondary,
+              other.foregroundOnSecondary,
+            ) &&
+            const DeepCollectionEquality().equals(
+              foregroundOnAppBar,
+              other.foregroundOnAppBar,
+            ) &&
+            const DeepCollectionEquality().equals(
+              foregroundOnDanger,
+              other.foregroundOnDanger,
+            ) &&
             const DeepCollectionEquality().equals(outline, other.outline) &&
-            const DeepCollectionEquality()
-                .equals(transparent, other.transparent) &&
-            const DeepCollectionEquality()
-                .equals(splashColor, other.splashColor) &&
-            const DeepCollectionEquality()
-                .equals(disabledColor, other.disabledColor) &&
-            const DeepCollectionEquality()
-                .equals(dividerColor, other.dividerColor) &&
+            const DeepCollectionEquality().equals(
+              transparent,
+              other.transparent,
+            ) &&
+            const DeepCollectionEquality().equals(
+              splashColor,
+              other.splashColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              disabledColor,
+              other.disabledColor,
+            ) &&
+            const DeepCollectionEquality().equals(
+              dividerColor,
+              other.dividerColor,
+            ) &&
             const DeepCollectionEquality().equals(neutral, other.neutral));
   }
 
