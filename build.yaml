@@ -1,0 +1,109 @@
+global_options:
+  freezed:
+    runs_before:
+      - json_serializable
+  json_serializable:
+    runs_before:
+      - retrofit_generator:retrofit
+
+targets:
+  $default:
+    builders:
+      # Serializer
+      json_serializable:
+        options:
+          explicit_to_json: true
+          # By default, field_rename: none, More options —
+          # snake, kebab, pascal, etc. To use, uncomment this below line —
+          #field_rename: snake
+        generate_for:
+          include:
+            # data layer:
+            - lib/data/models/**/*.dart
+            - lib/data/services/**/*_request.dart
+            - lib/data/services/**/*_response.dart
+            - lib/data/services/**/dtos/*.dart
+            - lib/data/authenticator/**/*.dart
+
+            # domain layer: Only specific entities that need JSON serialization
+            # Note: We added domain layer because sometimes we may need
+            # some freezed classes to be saved on storage where toJson() is required.
+            # We should not allow the entire `/entities` folder here, as entities don't need fromJson(), toJson(), etc.
+            # Specifying exact files will help build runner to run fast.
+            - lib/domain/entities/**/*.dart
+
+      # Retrofit Classes / Remote Data Sources
+      retrofit_generator:
+        generate_for:
+          include:
+            - lib/data/services/**/data_sources/remote/*_remote_data_source.dart
+
+      # Data Classes, Cloning
+      freezed:freezed:
+        generate_for:
+          include:
+            # data layer:
+            - lib/data/models/**/*.dart
+            - lib/data/services/**/*_request.dart
+            - lib/data/services/**/*_response.dart
+            - lib/data/services/**/dtos/*.dart
+            - lib/data/authenticator/*.dart
+
+            # domain layer:
+            - lib/domain/entities/**/*.dart
+
+            # core layer:
+            - lib/core/base/**.dart
+            - lib/core/response_error/**.dart
+
+            # presentation layer:
+            - lib/presentation/features/**/*_state.dart
+            - lib/presentation/features/**/*_cubit.dart
+            - lib/presentation/core/cubits/**/*_state.dart
+            - lib/presentation/core/cubits/**/*_cubit.dart
+
+      # Dependency Injection
+      injectable_generator:injectable_config_builder:
+        generate_for:
+          include:
+            - lib/injection/injector.dart
+
+      injectable_generator:injectable_builder:
+        generate_for:
+          include:
+            - lib/injection/injector.dart
+            - lib/injection/modules/*_module.dart
+
+            # data layer:
+            - lib/data/services/**/*_service_impl.dart
+            - lib/data/services/**/remapper/*_remapper.dart
+            - lib/data/services/**/data_sources/remote/*_remote_data_source.dart
+            - lib/data/services/**/data_sources/local/*_local_data_source.dart
+            - lib/data/preferences/*.dart
+            - lib/data/api/*_config.dart
+            - lib/data/authenticator/*.dart
+            - lib/data/interceptors/*.dart
+
+            # domain layer:
+            - lib/domain/use_cases/**/*.dart
+
+            # presentation
+            - lib/presentation/features/**/*_cubit.dart
+            - lib/presentation/core/cubits/**/*_cubit.dart
+
+      # Routing
+      auto_route_generator:
+        generate_for:
+          include:
+            - lib/presentation/core/router/router.dart
+            - lib/presentation/features/**_screen.dart
+            - lib/presentation/features/**_page.dart
+
+      #Asset gen
+      flutter_gen_runner:
+        options:
+          output: lib/gen/
+          line_length: 120
+          integrations:
+            image: true
+            flutter_svg: true
