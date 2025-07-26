@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:smart_notes/app/app.dart';
+import 'package:smart_notes/core/hive/hive_service.dart';
 import 'package:smart_notes/injection/dependencies.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -25,7 +27,8 @@ Future<void> mainCommon() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = const AppBlocObserver();
-
+  await Hive.initFlutter();
+  await HiveService.instance.init();
   /// Inject dependencies
   await DependencyManager.inject(/*flavor*/);
 

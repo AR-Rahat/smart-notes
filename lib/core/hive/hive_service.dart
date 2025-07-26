@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:smart_notes/core/logger/log.dart';
 
 class HiveService {
   static final HiveService _instance = HiveService._();
@@ -24,6 +25,7 @@ class HiveService {
   }
 
   Future<void> storeData(String key, dynamic value) async {
+    print('$value');
     await _cacheBox.put(key, value);
   }
 

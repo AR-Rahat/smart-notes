@@ -23,7 +23,8 @@ targets:
             - lib/data/services/**/*_request.dart
             - lib/data/services/**/*_response.dart
             - lib/data/services/**/dtos/*.dart
-            - lib/data/authenticator/**/*.dart
+            - lib/data/services/ai_processing/**/.dart
+            - lib/data/authenticator/*.dart
 
             # domain layer: Only specific entities that need JSON serialization
             # Note: We added domain layer because sometimes we may need
@@ -47,6 +48,7 @@ targets:
             - lib/data/services/**/*_request.dart
             - lib/data/services/**/*_response.dart
             - lib/data/services/**/dtos/*.dart
+            - lib/data/services/ai_processing/**/.dart
             - lib/data/authenticator/*.dart
 
             # domain layer:
@@ -77,6 +79,7 @@ targets:
             # data layer:
             - lib/data/services/**/*_impl.dart
             - lib/data/services/**/remapper/*_remapper.dart
+            - lib/data/services/**/data_sources/*_data_source.dart
             - lib/data/services/**/data_sources/remote/*_remote_data_source.dart
             - lib/data/services/**/data_sources/local/*_local_data_source.dart
             - lib/data/preferences/*.dart

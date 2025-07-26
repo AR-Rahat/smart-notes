@@ -1,10 +1,12 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
 import 'package:smart_notes/presentation/core/widgets/button/app_button.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
+import 'package:smart_notes/presentation/core/widgets/utilities/app_alerts.dart';
 import 'package:smart_notes/presentation/core/widgets/utilities/app_card.dart';
 import 'package:smart_notes/presentation/features/recording/cubit/audio_recorder_cubit.dart';
 import 'package:smart_notes/presentation/features/upload_voice_note/cubit/upload_note_cubit.dart';
@@ -89,6 +91,25 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
+          } else {
+            if (state.fileStatus.isLoading) {
+              context.alerts.showLoadingDialog(title: "Processing");
+            } else {
+              if (state.fileStatus.isSuccess || state.fileStatus.isSuccess) {
+                context.pop();
+                if (state.fileStatus.isSuccess) {
+                  context.alerts.snackBar(
+                    massage: 'File Processed Successfully',
+                    isSuccess: true,
+                  );
+                } else {
+                  context.alerts.snackBar(
+                    massage: 'Something went wrong',
+                    isSuccess: false,
+                  );
+                }
+              }
+            }
           }
         },
         child: BlocBuilder<UploadNoteCubit, UploadNoteState>(
@@ -145,6 +166,7 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
                               GestureDetector(
                                 onTap: () {
                                   context.read<UploadNoteCubit>().clearFile();
+                                  _playerController.stopAllPlayers();
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
@@ -232,7 +254,9 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
                     if (file != null)
                       AppButton.primary(
                         label: 'Process with Smart Note AI',
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<UploadNoteCubit>().processFileWithAi();
+                        },
                       ),
                   ],
                 ),
