@@ -69,15 +69,21 @@ mixin _$AppTextStylesTailorMixin on ThemeExtension<AppTextStyles> {
             const DeepCollectionEquality().equals(header1, other.header1) &&
             const DeepCollectionEquality().equals(header2, other.header2) &&
             const DeepCollectionEquality().equals(header3, other.header3) &&
-            const DeepCollectionEquality()
-                .equals(appBarTitle, other.appBarTitle) &&
+            const DeepCollectionEquality().equals(
+              appBarTitle,
+              other.appBarTitle,
+            ) &&
             const DeepCollectionEquality().equals(bodySmall, other.bodySmall) &&
             const DeepCollectionEquality().equals(body, other.body) &&
             const DeepCollectionEquality().equals(bodyLarge, other.bodyLarge) &&
-            const DeepCollectionEquality()
-                .equals(buttonLabel, other.buttonLabel) &&
-            const DeepCollectionEquality()
-                .equals(underlineText, other.underlineText));
+            const DeepCollectionEquality().equals(
+              buttonLabel,
+              other.buttonLabel,
+            ) &&
+            const DeepCollectionEquality().equals(
+              underlineText,
+              other.underlineText,
+            ));
   }
 
   @override

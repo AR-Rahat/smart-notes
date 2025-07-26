@@ -5,7 +5,6 @@ import 'package:smart_notes/presentation/core/resources/resources.dart';
 import 'package:smart_notes/presentation/core/router/router.gr.dart';
 import 'package:smart_notes/presentation/core/widgets/svg_picture/app_svg.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
-
 import 'bottom_sheet_option_widget.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
@@ -40,6 +39,9 @@ class AddNoteBottomSheet extends StatelessWidget {
           prefixWidget: Icon(Icons.multitrack_audio, color: context.neutral),
           title: 'Upload Audio File',
           description: 'Upload Audio file',
+          onPressed: (){
+            context.pushRoute(const UploadVoiceNoteRoute());
+          },
         ),
         BottomSheetOptionWidget(
           prefixWidget: Icon(Icons.audio_file_outlined, color: context.neutral),

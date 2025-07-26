@@ -7,5 +7,6 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: MainRoute.page, path: '/main', initial: true),
     AutoRoute(page: AudioRecorderRoute.page, path: '/recorder_screen'),
+    AutoRoute(page: UploadVoiceNoteRoute.page, path: '/upload_voice_note'),
   ];
 }
