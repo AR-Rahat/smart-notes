@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
 import 'package:smart_notes/presentation/core/widgets/button/app_button.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
@@ -82,7 +81,7 @@ class MainScreen extends StatelessWidget {
                       ),
                       padding: EdgeInsets.all(context.w12),
                       child: Icon(
-                        Symbols.discover_tune_rounded,
+                        Icons.close,
                         color: context.neutral,
                         size: context.customWidth(22),
                       ),

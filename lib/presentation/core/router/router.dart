@@ -5,13 +5,7 @@ import 'package:smart_notes/presentation/core/router/router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(
-          page: MainRoute.page,
-          path: '/main',
-          initial: true,
-          children: [
-
-          ],
-        ),
-      ];
+    AutoRoute(page: MainRoute.page, path: '/main', initial: true),
+    AutoRoute(page: AudioRecorderRoute.page, path: '/recorder_screen'),
+  ];
 }

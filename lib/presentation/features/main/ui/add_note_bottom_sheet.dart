@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_notes/gen/assets.gen.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
+import 'package:smart_notes/presentation/core/router/router.gr.dart';
 import 'package:smart_notes/presentation/core/widgets/svg_picture/app_svg.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
 
@@ -29,6 +31,10 @@ class AddNoteBottomSheet extends StatelessWidget {
           prefixWidget: Icon(Icons.mic_none_rounded, color: context.neutral),
           title: 'Record Audio',
           description: 'Record with your microphone',
+          onPressed: () {
+            //context.alerts.dismissDialog();
+            context.pushRoute(const AudioRecorderRoute());
+          },
         ),
         BottomSheetOptionWidget(
           prefixWidget: Icon(Icons.multitrack_audio, color: context.neutral),

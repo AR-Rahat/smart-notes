@@ -75,7 +75,7 @@ targets:
             - lib/injection/modules/*_module.dart
 
             # data layer:
-            - lib/data/services/**/*_service_impl.dart
+            - lib/data/services/**/*_impl.dart
             - lib/data/services/**/remapper/*_remapper.dart
             - lib/data/services/**/data_sources/remote/*_remote_data_source.dart
             - lib/data/services/**/data_sources/local/*_local_data_source.dart
