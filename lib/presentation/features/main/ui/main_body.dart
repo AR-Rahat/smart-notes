@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_notes/core/logger/log.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
+import 'package:smart_notes/presentation/core/router/router.gr.dart';
 import 'package:smart_notes/presentation/core/widgets/button/app_button.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
 import 'package:smart_notes/presentation/core/widgets/text_field/app_text_field.dart';
@@ -9,6 +11,7 @@ import 'package:smart_notes/presentation/core/widgets/utilities/app_alerts.dart'
 import 'package:smart_notes/presentation/core/widgets/utilities/app_card.dart';
 import 'package:smart_notes/presentation/features/main/cubit/main_cubit.dart';
 import 'package:smart_notes/presentation/features/main/ui/add_note_bottom_sheet.dart';
+import 'package:smart_notes/presentation/features/main/ui/note_card_widget.dart';
 
 class MainBody extends StatefulWidget {
   const MainBody({super.key});
@@ -54,7 +57,7 @@ class _MainBodyState extends State<MainBody> {
           ),
           IconButton(
             onPressed: () {
-              context.read<MainCubit>().fetchAllSavedNotes();
+              //context.read<MainCubit>().fetchAllSavedNotes();
             },
             icon: const Icon(Icons.settings_outlined),
           ),
@@ -63,8 +66,7 @@ class _MainBodyState extends State<MainBody> {
       body: RefreshIndicator(
         onRefresh: () async {
           await context.read<MainCubit>().fetchAllSavedNotes();
-          setState(() {
-          });
+          setState(() {});
         },
         child: Padding(
           padding: AppUiConstants.defaultScreenHorizontalPadding,
@@ -154,7 +156,7 @@ class _MainBodyState extends State<MainBody> {
               Expanded(
                 child: BlocBuilder<MainCubit, MainState>(
                   buildWhen: (prev, curr) => curr.noteStatus != prev.noteStatus,
-                  builder: (context, state) {
+                  builder: (_, state) {
                     if (state.allNotes.isNotEmpty) {
                       final list = state.allNotes;
                       Log.info(list.first.noteTitle);
@@ -162,54 +164,13 @@ class _MainBodyState extends State<MainBody> {
                         shrinkWrap: true,
                         itemBuilder: (_, index) {
                           final note = list[index];
-                          return AppCard(
-                            elevation: 5,
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: context.foregroundOnPrimary,
-                                borderRadius: BorderRadius.circular(context.w12),
-                                border: Border.all(color: context.neutral),
-                              ),
-                              padding: EdgeInsets.all(context.w16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MaterialAppText.titleMediumUppercase(
-                                    note.noteTitle,
-                                  ),
-                                  context.smallVerticalGap,
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: context.background,
-                                      borderRadius: BorderRadius.circular(
-                                        context.w8,
-                                      ),
-                                      border: Border.all(
-                                        color: context.dividerColor,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.all(context.w4),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.multitrack_audio,
-                                          color: context.neutral,
-                                          size: context.w12,
-                                        ),
-                                        context.mediumHorizontalGap,
-                                        MaterialAppText.labelLarge(
-                                          'Audio File',
-                                          color: context.neutral,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          return NoteCardWidget(
+                            note: note,
+                            onTap: () {
+                              context.pushRoute(
+                                NoteDetailsRoute(noteEntity: note),
+                              );
+                            },
                           );
                         },
                         itemCount: list.length,
