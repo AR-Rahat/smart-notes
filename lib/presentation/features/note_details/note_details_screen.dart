@@ -138,6 +138,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
             ),
             context.largeVerticalGap,
             NoteAudioPlayer(
+              audioUrl: widget.noteEntity.audioPath ?? '',
               onPositionChanged: (currentPosition) {
                 currentPlaybackTime.value =
                     currentPosition.inSeconds.toDouble();

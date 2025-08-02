@@ -24,6 +24,7 @@ class NoteProcessingServiceImpl implements NoteProcessingService {
     final resultEntity = _remapper.fromResponse(
       response: response,
       title: file.name,
+      path: file.path,
     );
 
     List<NoteEntity> notes = fetchAllNotes();

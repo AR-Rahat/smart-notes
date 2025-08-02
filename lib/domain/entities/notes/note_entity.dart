@@ -8,6 +8,7 @@ part 'note_entity.g.dart';
 sealed class NoteEntity with _$NoteEntity {
   factory NoteEntity({
     required String noteTitle,
+    String? audioPath,
     required List<NoteSegmentEntity> segments,
   }) = _NoteEntity;
 

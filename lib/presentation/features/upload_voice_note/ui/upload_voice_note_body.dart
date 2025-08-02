@@ -8,6 +8,7 @@ import 'package:smart_notes/presentation/core/widgets/button/app_button.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
 import 'package:smart_notes/presentation/core/widgets/utilities/app_alerts.dart';
 import 'package:smart_notes/presentation/core/widgets/utilities/app_card.dart';
+import 'package:smart_notes/presentation/features/note_details/note_audio_player.dart';
 import 'package:smart_notes/presentation/features/recording/cubit/audio_recorder_cubit.dart';
 import 'package:smart_notes/presentation/features/upload_voice_note/cubit/upload_note_cubit.dart';
 
@@ -178,77 +179,15 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
                         ),
                       ),
 
-                    // Duration display
-                    if (file != null && (isPlaying || isPaused))
+                    //Player after pick a file
+                    if(file != null)
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: context.w16),
-                        child: _buildDurationDisplay(state),
-                      ),
-
-                    // Waveform display
-                    if (file != null)
-                      Padding(
-                        padding: EdgeInsets.only(top: context.w16),
-                        child: _buildWaveformDisplay(context, state),
-                      ),
-
-                    // Control buttons
-                    if (file != null)
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: context.w16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (isPlaying)
-                              _buildCircularButton(
-                                onPressed: () {
-                                  _playerController.pausePlayer();
-                                },
-                                icon: Icons.pause,
-                                color: Colors.orange,
-                              ),
-                            if (isPaused)
-                              _buildCircularButton(
-                                onPressed: () {
-                                  _playerController.startPlayer();
-                                },
-                                icon: Icons.play_arrow,
-                                color: Colors.green,
-                              ),
-                            if (!isPlaying && !isPaused)
-                              _buildCircularButton(
-                                onPressed: () async {
-                                  if (file.path != null) {
-                                    context
-                                        .read<UploadNoteCubit>()
-                                        .startPlayback();
-                                    await _playerController.preparePlayer(
-                                      path: file.path!,
-                                    );
-                                    await _playerController.startPlayer();
-                                  }
-                                },
-                                icon: Icons.play_arrow,
-                                color: Colors.green,
-                              ),
-
-                            // Stop button (show only when playing or paused)
-                            if (isPlaying || isPaused) ...[
-                              const SizedBox(width: 20),
-                              _buildCircularButton(
-                                onPressed: () {
-                                  _playerController.stopPlayer();
-                                  context
-                                      .read<UploadNoteCubit>()
-                                      .stopPlayback();
-                                },
-                                icon: Icons.stop,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ],
+                        child: NoteAudioPlayer(
+                          audioUrl: file.path ?? '',
                         ),
                       ),
+
 
                     // Mock Ai processing button
                     if (file != null)
@@ -291,10 +230,10 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
           const SizedBox(height: 8),
           LinearProgressIndicator(
             value:
-                state.totalDuration.inMilliseconds > 0
-                    ? state.playbackPosition.inMilliseconds /
-                        state.totalDuration.inMilliseconds
-                    : 0.0,
+            state.totalDuration.inMilliseconds > 0
+                ? state.playbackPosition.inMilliseconds /
+                state.totalDuration.inMilliseconds
+                : 0.0,
             backgroundColor: Colors.grey[300],
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
           ),
@@ -346,7 +285,10 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
         if (state.pickedFile != null) {
           return AudioFileWaveforms(
             playerController: _playerController,
-            size: Size(MediaQuery.of(context).size.width - 64, 108),
+            size: Size(MediaQuery
+                .of(context)
+                .size
+                .width - 64, 108),
             playerWaveStyle: PlayerWaveStyle(
               fixedWaveColor: Colors.grey[300]!,
               liveWaveColor: Colors.green,
@@ -368,9 +310,13 @@ class _UploadVoiceNoteBodyState extends State<UploadVoiceNoteBody> {
               const SizedBox(height: 8),
               Text(
                 "Tap Play to view waveform",
-                style: Theme.of(
+                style: Theme
+                    .of(
                   context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                )
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
             ],

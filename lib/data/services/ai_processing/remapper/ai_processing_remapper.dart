@@ -9,9 +9,11 @@ class AiProcessingRemapper {
   NoteEntity fromResponse({
     required AiProcessedResponse response,
     required String title,
+    String? path,
   }) {
     return NoteEntity(
       noteTitle: title,
+      audioPath: path,
       segments: response.segments
           .map(_mapSegment)
           .toList(),
