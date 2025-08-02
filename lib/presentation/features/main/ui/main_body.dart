@@ -74,43 +74,15 @@ class _MainBodyState extends State<MainBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               context.smallVerticalGap,
-              Row(
-                children: [
-                  Flexible(
-                    child: AppTextField.optional(
-                      prefixWidget: Icon(
-                        Icons.search_rounded,
-                        color: context.neutral,
-                        size: context.w20,
-                      ),
-                      filled: true,
-                      fillColor: context.foregroundOnPrimary,
-                      hintText: 'Search notes and transcripts',
-                    ),
-                  ),
-                  context.mediumHorizontalGap,
-                  RotatedBox(
-                    quarterTurns: 1,
-                    child: AppCard(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: context.foregroundOnPrimary,
-                          borderRadius: BorderRadius.circular(context.w16),
-                          border: Border.all(
-                            color: context.dividerColor,
-                            width: context.customWidth(1.5),
-                          ),
-                        ),
-                        padding: EdgeInsets.all(context.w12),
-                        child: Icon(
-                          Icons.close,
-                          color: context.neutral,
-                          size: context.customWidth(22),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              AppTextField.optional(
+                prefixWidget: Icon(
+                  Icons.search_rounded,
+                  color: context.neutral,
+                  size: context.w20,
+                ),
+                filled: true,
+                fillColor: context.foregroundOnPrimary,
+                hintText: 'Search notes and transcripts',
               ),
               context.mediumVerticalGap,
               Row(

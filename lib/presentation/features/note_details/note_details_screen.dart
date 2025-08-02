@@ -5,6 +5,8 @@ import 'package:smart_notes/gen/assets.gen.dart';
 import 'package:smart_notes/presentation/core/resources/resources.dart';
 import 'package:smart_notes/presentation/core/widgets/svg_picture/app_svg.dart';
 import 'package:smart_notes/presentation/core/widgets/text/material_app_text.dart';
+import 'package:smart_notes/presentation/features/note_details/note_audio_player.dart';
+import 'package:smart_notes/presentation/features/note_details/note_section_widget.dart';
 
 @RoutePage()
 class NoteDetailsScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class NoteDetailsScreen extends StatefulWidget {
 class _NoteDetailsScreenState extends State<NoteDetailsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final ValueNotifier<double> currentPlaybackTime = ValueNotifier(0.0);
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    currentPlaybackTime.dispose();
     super.dispose();
   }
 
@@ -48,23 +52,29 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
       body: Padding(
         padding: AppUiConstants.defaultScreenHorizontalPadding,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            MaterialAppText.headlineLarge(widget.noteEntity.noteTitle),
-            context.mediumVerticalGap,
             Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(context.w12),
+                border: Border.all(color: context.dividerColor),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: context.customWidth(3),
+                horizontal: context.w12,
+              ),
+              child: MaterialAppText.headlineLarge(widget.noteEntity.noteTitle),
+            ),
+            context.mediumVerticalGap,
+            SizedBox(
               height: context.customWidth(32),
-              // decoration: BoxDecoration(
-              //     color: context.neutral,
-              //   borderRadius: BorderRadius.circular(8)
-              // ),
               child: TabBar(
                 isScrollable: false,
                 controller: _tabController,
                 dividerHeight: 0,
                 indicatorWeight: 1,
                 splashFactory: NoSplash.splashFactory,
-                overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                overlayColor: const WidgetStatePropertyAll(Colors.transparent),
                 indicator: BoxDecoration(
                   color: context.secondary,
                   borderRadius: BorderRadius.circular(context.w4),
@@ -105,41 +115,33 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen>
                 children: [
                   MaterialAppText.headlineSmall('Summery'),
                   SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...widget.noteEntity.segments.map(
-                          (item) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Divider(color: context.dividerColor),
-                              Row(
-                                children: [
-                                  MaterialAppText.titleLarge(
-                                    'Smart Noter',
-                                    fontSize: 22,
-                                  ),
-                                  context.mediumHorizontalGap,
-                                  MaterialAppText.titleMedium(
-                                    item.startTime.toString(),
-                                    color: context.neutral,
-                                  ),
-                                ],
+                    child: ValueListenableBuilder(
+                      valueListenable: currentPlaybackTime,
+                      builder: (context, time, __) {
+                        return Column(
+                          children: [
+                            ...widget.noteEntity.segments.map(
+                              (item) => NoteSectionWidget(
+                                segment: item,
+                                isCurrentSegment:
+                                    (time >= item.startTime &&
+                                        time <= item.endTime),
                               ),
-                              context.mediumVerticalGap,
-                              MaterialAppText.bodyLarge(
-                                fontSize: 18,
-                                item.content,
-                                overflow: TextOverflow.visible,
-                                textAlign: TextAlign.justify,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
+            ),
+            context.largeVerticalGap,
+            NoteAudioPlayer(
+              onPositionChanged: (currentPosition) {
+                currentPlaybackTime.value =
+                    currentPosition.inSeconds.toDouble();
+              },
             ),
           ],
         ),
