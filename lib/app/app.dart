@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     final appRouter = injector.get<AppRouter>();
 
     return MaterialApp.router(
+      title: 'Smart Notes',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.fromBrightness(Brightness.light),
       darkTheme: AppTheme.fromBrightness(Brightness.dark),
