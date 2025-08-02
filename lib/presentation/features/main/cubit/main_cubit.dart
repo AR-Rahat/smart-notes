@@ -16,6 +16,8 @@ class MainCubit extends Cubit<MainState> {
 
   final FetchAllNoteUseCase _fetchAllNoteUseCase;
 
+  List<NoteEntity> storedAllNotes = [];
+
   Future<void> fetchAllSavedNotes() async {
     if (state.noteStatus.isLoading) {
       return;
@@ -30,13 +32,14 @@ class MainCubit extends Cubit<MainState> {
         return;
       }
 
+      storedAllNotes = allNotes;
+
       emit(
         state.copyWith(
           noteStatus: const BaseStatus.success(),
           allNotes: allNotes,
         ),
       );
-
     } catch (e, s) {
       Log.error('Catch error $e\n stacktrace -> $s');
 
@@ -48,5 +51,23 @@ class MainCubit extends Cubit<MainState> {
 
       return emit(state.copyWith(noteStatus: BaseStatus.failure(error)));
     }
+  }
+
+  Future<void> filterNotes({String? query}) async {
+    if(state.noteStatus.isLoading) return;
+
+    emit(state.copyWith(noteStatus: const BaseStatus.loading()));
+
+    if(query == null || query.isEmpty){
+      return emit(state.copyWith(allNotes: storedAllNotes, noteStatus: const BaseStatus.success()));
+    }
+    final allNote =  storedAllNotes;
+    List<NoteEntity> filteredNote = [];
+    for(NoteEntity note in allNote){
+      if(note.noteTitle.toLowerCase().contains(query.toLowerCase()) || note.segments.any((seg) => seg.content.toLowerCase().contains(query.toLowerCase()))){
+        filteredNote.add(note);
+      }
+    }
+    return emit(state.copyWith(allNotes: filteredNote, noteStatus: const BaseStatus.success()));
   }
 }

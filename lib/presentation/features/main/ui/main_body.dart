@@ -66,7 +66,9 @@ class _MainBodyState extends State<MainBody> {
       body: RefreshIndicator(
         onRefresh: () async {
           await context.read<MainCubit>().fetchAllSavedNotes();
-          setState(() {});
+          setState(() {
+
+          });
         },
         child: Padding(
           padding: AppUiConstants.defaultScreenHorizontalPadding,
@@ -83,6 +85,9 @@ class _MainBodyState extends State<MainBody> {
                 filled: true,
                 fillColor: context.foregroundOnPrimary,
                 hintText: 'Search notes and transcripts',
+                onValueChange: (value){
+                  context.read<MainCubit>().filterNotes(query: value);
+                },
               ),
               context.mediumVerticalGap,
               Row(
